@@ -3,7 +3,7 @@
   <body style="font-family: Arial, Helvetica, sans-serif; background-color: #0b1220; color: #e6eef6; line-height: 1.6; padding: 30px;">
 
   <header style="text-align: center; margin-bottom: 40px;">
-      <h1 style="color: #7dd3fc;">🤖 AI Interview Preparation App — Backend</h1>
+      <h1 style="color: #7dd3fc;">🤖 AI Job Preparation App — Backend</h1>
       <p style="color: #9aa4b2; font-size: 16px; margin: 0 auto; max-width: 800px;">
         A scalable microservice-based backend designed to help users prepare for interviews with <b>AI-generated questions</b>, <b>intelligent answer evaluation</b>, and now — a new <b>AI-powered Resume Evaluator</b> built using Gemini AI.
       </p>
