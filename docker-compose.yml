@@ -1,0 +1,117 @@
+services:
+
+  config-server:
+    image: config-server:latest
+    container_name: config-server
+    ports:
+      - "8888:8888"
+    networks:
+      - interview-network
+
+  eureka-service:
+    image: eureka-service:latest
+    container_name: eureka-service
+    ports:
+      - "8761:8761"
+    networks:
+      - interview-network
+    depends_on:
+      - config-server
+
+  api-gateway:
+    image: api-gateway:latest
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    networks:
+      - interview-network
+    depends_on:
+      - eureka-service
+
+  user-service:
+    image: user-service:latest
+    container_name: user-service
+    ports:
+      - "8081:8081"
+    env_file:
+      - .env
+    networks:
+      - interview-network
+    depends_on:
+      - api-gateway
+
+  ai-service:
+    image: ai-service:latest
+    container_name: ai-service
+    ports:
+      - "8083:8083"
+    env_file:
+      - .env
+    networks:
+      - interview-network
+    depends_on:
+      - user-service
+
+  question-service:
+    image: question-service:latest
+    container_name: question-service
+    ports:
+      - "8082:8082"
+    env_file:
+      - .env
+    networks:
+      - interview-network
+    depends_on:
+      - ai-service
+
+  answer-service:
+    image: answer-service:latest
+    container_name: answer-service
+    ports:
+      - "8084:8084"
+    env_file:
+      - .env
+    networks:
+      - interview-network
+    depends_on:
+      - question-service
+
+  evaluation-service:
+    image: evaluation-service:latest
+    container_name: evaluation-service
+    ports:
+      - "8085:8085"
+    env_file:
+      - .env
+    networks:
+      - interview-network
+    depends_on:
+      - answer-service
+
+  mock-interview-service:
+    image: mocker-interview-service:latest
+    container_name: mocker-interview-service
+    ports:
+      - "8086:8086"
+    env_file:
+      - .env
+    networks:
+      - interview-network
+    depends_on:
+      - evaluation-service
+
+  resume-service:
+    image: resume-service:latest
+    container_name: resume-service
+    ports:
+      - "8087:8087"
+    env_file:
+      - .env
+    networks:
+      - interview-network
+    depends_on:
+      - mock-interview-service
+
+networks:
+  interview-network:
+    driver: bridge
